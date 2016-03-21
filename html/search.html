@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/search.css"/>
+	</head>
+	<body>
+		<div class="header">
+			发现
+		</div>
+		<div class="search">
+			<div class="sea">
+				<input class="nick" type="text" placeholder="请输入昵称"/>
+				<input class="SS" type="button" value="搜索" />
+			</div>
+		</div>
+		<div id="wrapper" class="seachCon">
+			<div>
+				<dl>
+					<dt><img src="img/back.jpg"/></dt>
+					<dd>
+						<p>我叫小萌</p>
+						<p>我叫小萌我怕谁</p>
+					</dd>
+					<p class="gz">关注</p>
+				</dl>
+			</div>
+		</div>
+		<!--footer-->
+		<ul class="footer">
+			<li>
+				<a href="index.html">
+					<div></div>
+					<div>首页</div>
+				</a>
+			</li>
+			<li>
+				<a href="search.html">
+					<div></div>
+					<div>发现</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<div></div>
+				</a>
+			</li>
+			<li>
+				<a href="user.html">
+					<div></div>
+					<div>我的</div>
+				</a>
+			</li>
+			<li>
+				<a href="login.html">
+					<div></div>
+					<div>退出</div>
+				</a>
+			</li>
+		</ul>
+	</body>
+	<script src="js/rem.js"></script>
+	<script src="js/zepto.min.js"></script>
+	<script src="js/iscroll.js"></script>
+	<script>
+		window.onload=function(){
+			var myscroll;
+			var Height=$(window).height();
+			var topHeight=$(".header").height();
+			var seaHeight=$(".search").height();
+			var footerHeight=$(".footer").height();
+			$("#wrapper").height(Height-topHeight-seaHeight-footerHeight-10)
+			myscroll=new iScroll("wrapper",{hScrollbar:false,vScrollbar:false});
+			myscroll.refresh();
+			//提交
+			$(".SS").on("tap",function(e){
+				e.preventDefault();
+				var kw = $(".nick").val();
+				var userInfo = window.localStorage;
+				var log = userInfo.getItem("loginsuserid")
+				$.ajax({
+					url:"http://localhost:8080/Proxy/FootBall/user/json/queryall.do",
+					data:{"loginsuserid":log,"keyword":kw,"page.pageNo":1},
+					success:function(d){
+						var data = JSON.parse(d);
+						console.log(data)
+						for(var i=0;i<data.data.userlist.length;i++){
+							var $dl = $("<dl></dl>");
+							var $dt = $("<dt></dt>");
+							var $img = $("<img src='http://101.200.173.217:8080/FootBall"+data.data.userlist[i].avatarpath+"'/>");
+							var $dd = $("<dd></dd>")
+							var $p1 = $("<p>"+data.data.userlist[i].nickname+"</p>");
+							var $p2 = $("<p>"+data.data.userlist[i].signnature+"</p>")
+							$(".seachCon div").append($dl);
+							$dl.append($dt);
+							$dl.append("<p class='gz'>关注</p>");
+							$dt.append($img);
+							$dl.append($dd);
+							$dd.append($p1);
+							$dd.append($p2);
+							$img[0].onload = function(){
+								myscroll.refresh();
+							//关注
+							}
+						}
+						$(".seachCon").on("tap",".gz",function(){
+							var Index = $(this).parent().index();
+							var man =data.data.userlist[Index].id;
+							$(".gz").eq(Index).toggleClass("GZ")
+							if($(".gz").eq(Index).hasClass("GZ")){
+								$.ajax({
+									type:"get",
+									url:"http://localhost:8080/Proxy/FootBall/attention/json/follow.do",
+									data:{"loginsuserid":log,"tagetuserid ":man},
+									success:function(d){
+										var da = JSON.parse(d);
+										console.log(da);
+									}
+								});
+							}else{
+								$.ajax({
+									type:"get",
+									url:"http://localhost:8080/Proxy/FootBall/attention/json/unfollow.do",
+									data:{"loginsuserid":log,"tagetuserid ":man},
+									success:function(d){
+										var da = JSON.parse(d);
+										console.log(da);
+									}
+								});
+							}
+						})
+					}
+				})
+			})
+		}
+	</script>
+</html>

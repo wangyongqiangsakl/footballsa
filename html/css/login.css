@@ -1,0 +1,80 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+input{
+	outline: none;
+}
+header{
+	width: 100%;
+	height: .74rem;
+	background: #0f91c5;
+	color: white;
+	text-align: center;
+	line-height: .74rem;
+	font-size: .32rem;
+}
+.form{
+	margin: 0 .3rem;
+	font-size: .16rem;
+}
+.form input{
+	width: 100%;
+	height: .54rem;
+	font-size: .28rem;
+	line-height: .54rem;
+	border: 0;
+	border-bottom: 1px solid #7f7f7f;
+}
+.box{
+	width: 100%;
+	height: .7rem;
+	border-bottom: 1px solid #7F7F7F;
+	overflow: hidden;
+	position: relative;
+}
+.psd2{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+}
+.box input{
+	border: 0;
+}
+.box .Div{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 1.9rem;
+	height: .67rem;
+	line-height: .67rem;
+	text-align: center;
+	background: #0F91C5;
+	color: #fff;
+	border-radius: .03rem;
+}
+.moble1{
+	margin-top: .34rem;
+	margin-bottom: .59rem;
+}
+.moble2{
+	margin-top: .34rem;
+	margin-bottom: .41rem;
+}
+.nickname{
+	margin-top: .55rem;
+	margin-bottom: .9rem;
+}
+.form .btn1{
+	height: .77rem;
+	font-size: .34rem;
+	line-height:.77rem;
+	background: #0f91c5;
+	color: white;
+	text-align: center;
+	border: 0;
+	border-radius: .03rem;
+}
+.form .btn2{
+	margin-top: .7rem;
+}

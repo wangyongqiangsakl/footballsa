@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>找回密码</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="css/login.css" />
+		<script src="js/rem.js"></script>
+	</head>
+	<body>
+		<header>
+			足球圈子--找回密码
+		</header>
+		<div class="form">
+			<input class="moble1 moble2" type="text" placeholder="手机号" />
+			<div class="box">
+				<input class="psd psd2" type="password" placeholder="密码" />
+				<div class="Div">获取验证码</div>
+			</div>
+			<input class="btn2 btn1" type="button" value="提  交" />
+		</div>
+	</body>
+	<script src="js/zepto.min.js"></script>
+	<script>
+	window.onload=function(){
+		$(".Div").on("tap",function(e){
+			e.preventDefault();
+			var Uid = $(".moble2").val(),
+				Pwd = $(".psd2").val(),
+				userInfo = window.localStorage;
+			if(true){
+				$.ajax({
+					url:"http://localhost:8080/Proxy/FootBall/checkcode/json/request/sms.do",
+					data:{"phonenumber":Uid,"password":Pwd},
+					success:function(d){
+						var data = JSON.parse(d);
+						console.log(data)
+						userInfo.setItem("loginStatus","1");
+						userInfo.setItem("loginuser",data.data.loginuser)
+					}
+				})
+			}
+		})
+	}
+	</script>
+</html>
