@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+		<script src="js/rem.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/user.css"/>
+		<link rel="stylesheet" type="text/css" href="css/swiper-3.3.1.min.css"/>
+	</head>
+	<body>
+		<div class="header">
+			个人中心
+		</div>
+		<div class="search">
+			<div class="sea">
+				<input type="text" placeholder="请输入昵称"/>
+				<a href="#"><p>搜索</p></a>
+			</div>
+		</div>
+		<div class="userCon">
+			<dl>
+				<dt><img src="img/back.jpg"/></dt>
+				<dd>
+					<p>我叫小萌</p>
+					<p>我叫小萌我怕谁</p>
+				</dd>
+			</dl>
+			<ul class="userNav">
+				<li class="active">照片(<span>1</span>)</li>
+				<li>关注(<span>28</span>)</li>
+				<li>粉丝(<span>9</span>)</li>
+			</ul>
+		</div>
+		<div class="userTab swiper-container">
+			<div class="swiper-wrapper">
+				<div class="userOne swiper-slide" id="wrapper1">
+					<div>
+						<img src="img/p12.png" />
+					</div>
+				</div>
+				<div class="userOne swiper-slide" id="wrapper2">
+					<div>
+						<img src="img/p10.png" />
+					</div>
+				</div>
+				<div class="userOne swiper-slide" id="wrapper3">
+					<div>
+						<img src="img/p12.png" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--footer-->
+		<ul class="footer">
+			<li>
+				<a href="index.html">
+					<div></div>
+					<div>首页</div>
+				</a>
+			</li>
+			<li>
+				<a href="search.html">
+					<div></div>
+					<div>发现</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<div></div>
+				</a>
+			</li>
+			<li>
+				<a href="user.html">
+					<div></div>
+					<div>我的</div>
+				</a>
+			</li>
+			<li>
+				<a href="login.html">
+					<div></div>
+					<div>退出</div>
+				</a>
+			</li>
+		</ul>
+	</body>
+	<script src="js/zepto.min.js"></script>
+	<script src="js/iscroll.js"></script>
+	<script src="js/swiper-3.3.1.jquery.min.js"></script>
+	<script>
+	window.onload=function(){
+		var Height=$(window).height();
+		var topHeight=$(".header").height();
+		var seaHeight=$(".search").height();
+		var userHeight = $(".userCon").height();
+		var footerHeight=$(".footer").height();
+		$(".userOne").height(Height-topHeight-seaHeight-userHeight-footerHeight-10)
+		myscroll=new iScroll("wrapper1",{hScrollbar:false,vScrollbar:false});
+		myscroll=new iScroll("wrapper2",{hScrollbar:false,vScrollbar:false});
+		myscroll=new iScroll("wrapper3",{hScrollbar:false,vScrollbar:false});
+		myscroll.refresh();
+		//swiper
+		var mySwiper = new Swiper ('.swiper-container', {
+			direction: 'horizontal',
+			loop: false,
+			onSlideChangeStart:function(swiper){
+				var index = swiper.activeIndex;
+		    	$(".userNav li").eq(index).addClass("active").siblings().removeClass("active");
+			}
+		})    
+		//tab切换
+		$(".userNav li").on("tap",function(){
+			var index = $(this).index();
+			$(this).addClass("active").siblings().removeClass("active");
+			mySwiper.slideTo(index,1000,false)
+		})
+	}
+		
+	</script>
+</html>
